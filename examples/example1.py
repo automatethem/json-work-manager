@@ -7,6 +7,8 @@ import python_supporter
 import os
 import app
 
+from json_worker.json_worker import JsonWorker
+
     def stop_callback(self):
         print("stop")
     
@@ -24,9 +26,6 @@ import app
         worker_class = StaticSiteArticleNotification
         #print(inputs_directory) #C:\Users\Administrator\Desktop\static-site-article-notification-app-main\app\app/../inputs
         #print(outputs_directory) #C:\Users\Administrator\Desktop\static-site-article-notification-app-main\app\app/../outputs
-        models_directory=None
         
-        #json_worker = WorkBot(config, inputs_directory, outputs_directory, models_directory, self.stop_callback, self.end_callback, self.log_callback)
-        #json_worker = WorkBot(config, inputs_directory, outputs_directory, models_directory, lambda: State.stop_callback(), self.end_callback, self.log_callback)
-        json_worker = JsonWorker(config, worker_class, inputs_directory, outputs_directory, models_directory, lambda: print("stop"), lambda: print("end"), lambda message, verbose, background_rgb: print(message, verbose, background_rgb))
+        json_worker = JsonWorker(config, worker_class, inputs_directory, outputs_directory, lambda: print("stop"), lambda: print("end"), lambda message, verbose, background_rgb: print(message, verbose, background_rgb))
         json_worker.start() 
