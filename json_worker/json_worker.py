@@ -1,7 +1,3 @@
-'''
-pip install selenium
-pip install webdriver-manager
-'''
 import datetime
 import os
 import threading
