@@ -1,5 +1,6 @@
 # json-worker
 
+https://pypi.org/project/json-worker
 <pre>
 pip install json-worker
 </pre>
