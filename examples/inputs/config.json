@@ -1,0 +1,50 @@
+{
+    "works": [
+        {
+            "name": "바이낸스 공지 알림 작업",
+            "schedules": {
+                "schedules": [
+                    {
+                        "year": 2023, 
+                        "month": 4, 
+                        "day": 2, 
+                        "hour": 5, 
+                        "minute": 36, 
+                        "second": 0, 
+                        "enable": true
+                    }
+                ],
+                "enable": false
+            },
+            "verbose": true,
+            "enable": true
+        },
+        {
+            "name": "빗썸 공지 알림 작업",
+            "schedules": {
+                "schedules": [
+                    {
+                        "year": 2022, 
+                        "month": 4, 
+                        "day": 2, 
+                        "hour": 5, 
+                        "minute": 36, 
+                        "second": 0, 
+                        "enable": true
+                    }
+                ],
+                "enable": false
+            },
+            "verbose": true,
+            "enable": true
+        }
+    ],
+    "speak_start_log": false,    
+    "speak_stop_log": false,
+    "sequence": false,
+    "shortcut_keys": {
+        "start": ["control", "s"],
+        "stop": ["control", "e"],
+        "enable": false
+    }
+}
