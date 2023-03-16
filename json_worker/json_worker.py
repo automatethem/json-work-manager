@@ -339,7 +339,7 @@ class JsonWorker:
                     self.end_callback()
                 self.log(f"{self.title}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
                 if self.config.get("speak_stop_log"):
-                    python_supporter.tts.speak(f"{self.title}을 종료합니다.")
+                    ai_supporter.tts.speak(f"{self.title}을 종료합니다.")
                 break
 
             time.sleep(0.1)
