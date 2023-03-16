@@ -5,4 +5,6 @@ https://pypi.org/project/json-worker
 pip install json-worker
 </pre>
 
-https://github.com/automatethem/json-worker/blob/main/examples/example1.py
+Basic example
+https://github.com/automatethem/json-worker/blob/main/examples/basic/worker.py  
+https://github.com/automatethem/json-worker/blob/main/examples/basic/inputs/config.json
