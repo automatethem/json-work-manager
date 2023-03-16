@@ -128,7 +128,7 @@ class JsonWorker:
 
         self.log(f"{self.title}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
         if self.config.get("speak_start_log"):
-            python_supporter.tts.speak(f"{self.title}을 시작합니다.")
+            ai_supporter.tts.speak(f"{self.title}을 시작합니다.")
                     
         message = "활성 작업 리스트입니다."
         self.log(message)
@@ -325,7 +325,7 @@ class JsonWorker:
                 self.stop_callback()
                 self.log(f"{self.title}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
                 if self.config.get("speak_stop_log"):
-                    python_supporter.tts.speak(f"{self.title}을 중지합니다.")
+                    ai_supporter.tts.speak(f"{self.title}을 중지합니다.")
                 break
 
             all_done = True
