@@ -19,6 +19,7 @@ class Worker:
 if __name__ == "__main__":
     import os
     import python_supporter
+    #from worker import Worker
     from json_worker.json_worker import JsonWorker
 
     def stop_callback():
