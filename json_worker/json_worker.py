@@ -4,6 +4,7 @@ import threading
 import traceback
 import python_supporter
 import time
+import ai_supporter
 
 class ThreadRun:
     def __init__(self, config, work, worker_class, json_worker, inputs_directory, outputs_directory, schedule, schedule_s):
