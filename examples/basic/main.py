@@ -15,6 +15,8 @@ def log_callback(message, verbose, background_rgb):
 current_py_file_path = os.path.dirname(os.path.realpath(__file__))
 inputs_directory = current_py_file_path+"/inputs"
 outputs_directory = current_py_file_path+"/outputs"
+if not os.path.exists(outputs_directory):
+    os.makedirs(outputs_directory)
 config = python_supporter.config.load_config_from_file(inputs_directory+"/config.json")
 worker_class = Worker
 
