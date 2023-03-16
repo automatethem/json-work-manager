@@ -7,7 +7,7 @@ def requirements():
 
 setuptools.setup(
 	name='json-worker',
-	version='0.0.2',
+	version='0.0.3',
 	description='Json worker',
 	long_description=open('README.md').read(),
 	long_description_content_type='text/markdown',
