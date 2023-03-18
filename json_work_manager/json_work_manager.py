@@ -88,7 +88,7 @@ class ThreadRun:
 class JsonWorkManager:
     def __init__(self, base_directory, json_work_class, stop_callback=None, end_callback=None, log_callback=None):
         super().__init__()
-        self.title = "Json 작업자"
+        self.title = "Json 작업 관리자"
         self.inputs_directory = base_directory + "/inputs"
         self.outputs_directory = base_directory + "/outputs"
         if not os.path.exists(self.outputs_directory):
