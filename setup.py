@@ -6,13 +6,13 @@ def requirements():
         return f.read().splitlines()
 
 setuptools.setup(
-	name='json-worker',
-	version='0.0.5',
-	description='Json worker',
+	name='json-work-manager',
+	version='0.0.6',
+	description='Json work manager',
 	long_description=open('README.md').read(),
 	long_description_content_type='text/markdown',
 	author='Sang Ki Kwon',
-	url='https://github.com/automatethem/json-worker',
+	url='https://github.com/automatethem/json-work-manager',
 	install_requires=requirements(),
 	author_email='automatethem@gmail.com',
 	license='MIT',
