@@ -86,30 +86,16 @@ class ThreadRun:
             self.work["internal_mark_work_done"] = True
 
 class JsonWorker:
-    ##title = "작업 봇"
-    ##version = "0.8"
-
-    '''
-    @classmethod
-    def get_id_and_title_and_version_and_default_setting_text_and_manual(cls):
-        return WorkBot.concrete_work_class.id, WorkBot.concrete_work_class.title, WorkBot.concrete_work_class.version, WorkBot.concrete_work_class.default_setting_text, WorkBot.concrete_work_class.manual
-        
-    @classmethod
-    def config_after_load(cls, config, inputs_directory, outputs_directory, models_directory):
-        WorkBot.concrete_work_class.config_after_load(config, inputs_directory, outputs_directory, models_directory)
-
-    @classmethod
-    def config_before_start(cls, config, inputs_directory, outputs_directory, models_directory):
-        WorkBot.concrete_work_class.config_before_start(config, inputs_directory, outputs_directory, models_directory)
-    '''
-    
-    def __init__(self, config, worker_class, inputs_directory, outputs_directory, stop_callback, end_callback, log_callback):
+    def __init__(self, base_directory, worker_class, stop_callback=None, end_callback=None, log_callback=None):
         super().__init__()
-        self.title = "작업 봇"
-        self.config = config
+        self.title = "Json 작업자"
+        self.inputs_directory = base_directory + "/inputs"
+        self.outputs_directory = base_directory + "/outputs"
+        if not os.path.exists(self.outputs_directory):
+            os.makedirs(self.outputs_directory)
+        self.json_file = self.inputs_directory +"/config.json"
+        self.config = python_supporter.config.load_config_from_json_file(self.json_file)
         self.worker_class = worker_class
-        self.inputs_directory = inputs_directory
-        self.outputs_directory = outputs_directory
         self.stop_callback = stop_callback
         self.end_callback = end_callback
         self.log_callback = log_callback
@@ -120,9 +106,6 @@ class JsonWorker:
         self.threads = []
 
         ##python_supporter.logging_lib.basic_config(app.define_logging_level.level, os.path.join(self.outputs_directory, "log.txt"))
-
-    #def start(self):
-    #    self.stop_callback()
 
     def start(self):
         self.running = True
