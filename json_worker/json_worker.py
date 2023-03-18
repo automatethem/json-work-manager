@@ -85,7 +85,7 @@ class ThreadRun:
             #logging.debug("internal_mark_work_done")
             self.work["internal_mark_work_done"] = True
 
-class JsonWorker:
+class JsonWorkManager:
     def __init__(self, base_directory, json_work_class, stop_callback=None, end_callback=None, log_callback=None):
         super().__init__()
         self.title = "Json 작업자"
@@ -354,6 +354,6 @@ if __name__ == "__main__":
     #print(outputs_directory) #C:\Users\Administrator\Desktop\static-site-article-notification-app-main\app\app/../outputs
 
     config = python_supporter.config.load_config_from_file(os.path.join(inputs_directory, "config.json"))
-    json_work_manager = JsonWorker(config, json_work_class, inputs_directory, outputs_directory)
+    json_work_manager = JsonWorkManager(config, json_work_class, inputs_directory, outputs_directory)
 
     json_work_manager.start()
