@@ -7,7 +7,7 @@ import time
 import ai_supporter
 
 class ThreadRun:
-    def __init__(self, config, work, worker_class, json_worker, inputs_directory, outputs_directory, schedule, schedule_s):
+    def __init__(self, config, work, json_work_class, json_worker, inputs_directory, outputs_directory, schedule, schedule_s):
         super().__init__()
 
         self.config = config
@@ -16,7 +16,7 @@ class ThreadRun:
         self.schedule = schedule
         self.schedule_s = schedule_s
 
-        self.worker = worker_class(self.config, self.work, self.json_worker, inputs_directory, outputs_directory, schedule_s)
+        self.worker = json_work_class(self.config, self.work, self.json_worker, inputs_directory, outputs_directory, schedule_s)
 
     def run(self):
         if self.schedule_s == None or self.schedule_s == "":
@@ -86,7 +86,7 @@ class ThreadRun:
             self.work["internal_mark_work_done"] = True
 
 class JsonWorker:
-    def __init__(self, base_directory, worker_class, stop_callback=None, end_callback=None, log_callback=None):
+    def __init__(self, base_directory, json_work_class, stop_callback=None, end_callback=None, log_callback=None):
         super().__init__()
         self.title = "Json 작업자"
         self.inputs_directory = base_directory + "/inputs"
@@ -95,7 +95,7 @@ class JsonWorker:
             os.makedirs(self.outputs_directory)
         self.json_file = self.inputs_directory +"/config.json"
         self.config = python_supporter.config.load_config_from_json_file(self.json_file)
-        self.worker_class = worker_class
+        self.json_work_class = json_work_class
         self.stop_callback = stop_callback
         self.end_callback = end_callback
         self.log_callback = log_callback
@@ -185,7 +185,7 @@ class JsonWorker:
                                         schedule["internal_mark_schedule_no_more_run"] = True
                                         schedule_dt = datetime.datetime(year, month, day, hour, minute, second)
                                         schedule_s = schedule_dt.strftime('%Y-%m-%d %H:%M:%S')
-                                        thread_run = ThreadRun(self.config, work, self.worker_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                        thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                         thread = threading.Thread(target=thread_run.run, args=[])
                                         thread.daemon = True
                                         thread.start()
@@ -219,7 +219,7 @@ class JsonWorker:
                                             schedule_dt = dt.replace(hour=hour, minute=minute, second=second)
                                             schedule_s = "매 " + schedule_dt.strftime('%H시 %M분 %S초')
                                             schedule_s = schedule_s + " 마다"
-                                            thread_run = ThreadRun(self.config, work, self.worker_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                            thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                             thread = threading.Thread(target=thread_run.run, args=[])
                                             thread.daemon = True
                                             thread.start()
@@ -237,7 +237,7 @@ class JsonWorker:
                                             schedule_dt = dt.replace(minute=minute, second=second)
                                             schedule_s = "매 " + schedule_dt.strftime('%M분 %S초')
                                             schedule_s = schedule_s + " 마다"
-                                            thread_run = ThreadRun(self.config, work, self.worker_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                            thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                             thread = threading.Thread(target=thread_run.run, args=[])
                                             thread.daemon = True
                                             thread.start()
@@ -256,7 +256,7 @@ class JsonWorker:
                                             schedule_dt = dt.replace(second=second)
                                             schedule_s = "매 " + schedule_dt.strftime('%S초')
                                             schedule_s = schedule_s + " 마다"
-                                            thread_run = ThreadRun(self.config, work, self.worker_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                            thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                             thread = threading.Thread(target=thread_run.run, args=[])
                                             thread.daemon = True
                                             thread.start()
@@ -267,7 +267,7 @@ class JsonWorker:
                                 else:
                                     schedule["internal_mark_schedule_no_more_run"] = True
                                     schedule_s = "지금"
-                                    thread_run = ThreadRun(self.config, work, self.worker_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                    thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                     thread = threading.Thread(target=thread_run.run, args=[])
                                     thread.daemon = True
                                     thread.start()
@@ -287,7 +287,7 @@ class JsonWorker:
                     else:
                         work["internal_mark_work_no_more_run"] = True
                         schedule_s = "지금"
-                        thread_run = ThreadRun(self.config, work, self.worker_class, self, self.inputs_directory, self.outputs_directory, None, schedule_s)
+                        thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, None, schedule_s)
                         thread = threading.Thread(target=thread_run.run, args=[])
                         thread.daemon = True
                         thread.start()
@@ -349,11 +349,11 @@ if __name__ == "__main__":
     inputs_directory = current_py_file_path+"/../inputs"
     outputs_directory = current_py_file_path+"/../outputs"
     config = python_supporter.config.load_config_from_file(inputs_directory+"/config.json")
-    worker_class = app.work.static_site_article_notification.static_site_article_notification.StaticSiteArticleNotification
+    json_work_class = app.work.static_site_article_notification.static_site_article_notification.StaticSiteArticleNotification
     #print(inputs_directory) #C:\Users\Administrator\Desktop\static-site-article-notification-app-main\app\app/../inputs
     #print(outputs_directory) #C:\Users\Administrator\Desktop\static-site-article-notification-app-main\app\app/../outputs
 
     config = python_supporter.config.load_config_from_file(os.path.join(inputs_directory, "config.json"))
-    json_worker = JsonWorker(config, worker_class, inputs_directory, outputs_directory)
+    json_worker = JsonWorker(config, json_work_class, inputs_directory, outputs_directory)
 
     json_worker.start()
