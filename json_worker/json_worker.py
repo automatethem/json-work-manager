@@ -7,16 +7,16 @@ import time
 import ai_supporter
 
 class ThreadRun:
-    def __init__(self, config, work, json_work_class, json_worker, inputs_directory, outputs_directory, schedule, schedule_s):
+    def __init__(self, config, work, json_work_class, json_work_manager, inputs_directory, outputs_directory, schedule, schedule_s):
         super().__init__()
 
         self.config = config
         self.work = work
-        self.json_worker = json_worker
+        self.json_work_manager = json_work_manager
         self.schedule = schedule
         self.schedule_s = schedule_s
 
-        self.worker = json_work_class(self.config, self.work, self.json_worker, inputs_directory, outputs_directory, schedule_s)
+        self.worker = json_work_class(self.config, self.work, self.json_work_manager, inputs_directory, outputs_directory, schedule_s)
 
     def run(self):
         if self.schedule_s == None or self.schedule_s == "":
@@ -26,15 +26,15 @@ class ThreadRun:
         else:
             schedule_s = " (" + self.schedule_s +")" 
 
-        self.json_worker.log(f"{self.work['name']}{schedule_s}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
+        self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
 
         try:
             self.worker.start()
 
             if not self.worker.running:
-                self.json_worker.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
             else:
-                self.json_worker.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
 
             if self.schedule:
                 year = self.schedule.get("year")
@@ -74,13 +74,13 @@ class ThreadRun:
                 #logging.debug("internal_mark_work_done")
                 self.work["internal_mark_work_done"] = True
         except BaseException as e:
-            self.json_worker.log(traceback.format_exc())
+            self.json_work_manager.log(traceback.format_exc())
             #logging.debug(traceback.format_exc())
             
             if not self.worker.running:
-                self.json_worker.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
             else:
-                self.json_worker.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
 
             #logging.debug("internal_mark_work_done")
             self.work["internal_mark_work_done"] = True
@@ -354,6 +354,6 @@ if __name__ == "__main__":
     #print(outputs_directory) #C:\Users\Administrator\Desktop\static-site-article-notification-app-main\app\app/../outputs
 
     config = python_supporter.config.load_config_from_file(os.path.join(inputs_directory, "config.json"))
-    json_worker = JsonWorker(config, json_work_class, inputs_directory, outputs_directory)
+    json_work_manager = JsonWorker(config, json_work_class, inputs_directory, outputs_directory)
 
-    json_worker.start()
+    json_work_manager.start()
