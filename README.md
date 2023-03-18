@@ -1,4 +1,4 @@
-# json-worker
+# json-work-manager
 
 https://pypi.org/project/json-work-manager
 <pre>
