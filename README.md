@@ -8,9 +8,8 @@ pip install json-work-manager
 Examples  
 
 Basic  
-https://github.com/automatethem/json-work-manager/blob/main/examples/basic/main.py  
-https://github.com/automatethem/json-work-managerr/blob/main/examples/basic/inputs/config.json
 https://github.com/automatethem/json-work-manager/blob/main/examples/basic/json_work.py   
+https://github.com/automatethem/json-work-managerr/blob/main/examples/basic/inputs/config.json
 
 Chrome  
 https://github.com/automatethem/json-work-manager/blob/main/examples/chrome/inputs/config.json
