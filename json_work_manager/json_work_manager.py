@@ -341,19 +341,3 @@ class JsonWorkManager:
 
         for thread_run in self.thread_runs:
             thread_run.worker.stop()
-
-if __name__ == "__main__":
-    import app
-    
-    current_py_file_path = os.path.dirname(os.path.realpath(__file__))
-    inputs_directory = current_py_file_path+"/../inputs"
-    outputs_directory = current_py_file_path+"/../outputs"
-    config = python_supporter.config.load_config_from_file(inputs_directory+"/config.json")
-    json_work_class = app.work.static_site_article_notification.static_site_article_notification.StaticSiteArticleNotification
-    #print(inputs_directory) #C:\Users\Administrator\Desktop\static-site-article-notification-app-main\app\app/../inputs
-    #print(outputs_directory) #C:\Users\Administrator\Desktop\static-site-article-notification-app-main\app\app/../outputs
-
-    config = python_supporter.config.load_config_from_file(os.path.join(inputs_directory, "config.json"))
-    json_work_manager = JsonWorkManager(config, json_work_class, inputs_directory, outputs_directory)
-
-    json_work_manager.start()
