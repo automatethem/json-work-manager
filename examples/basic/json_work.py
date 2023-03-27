@@ -19,11 +19,21 @@ class JsonWork:
     def start(self):
         self.running = True
 
+        #'''
+        self.log("작업을 합니다")
+        self.log("1초간 쉽니다")
+        
+        self.wait_for(1)   
+        #'''
+        '''
         while True:
             if not self.running:
-                return
-
-            self.wait_for(1)
+                break
+    
+            self.log("작업을 합니다")
+            self.log("1초간 쉽니다")
+            self.wait_for(1)        
+        '''
 
     def wait_for(self, wait_seconds):
         current_datetime = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
