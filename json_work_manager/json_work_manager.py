@@ -96,7 +96,6 @@ class JsonWorkManager:
             os.makedirs(self.outputs_directory)
         self.json_file = self.inputs_directory +"/config.json"
         self.config = python_supporter.config.load_config_from_json_file(self.json_file)
-        self.internal_config = copy.deepcopy(self.confi)
         self.json_work_class = json_work_class
         self.stop_callback = stop_callback
         self.end_callback = end_callback
@@ -109,6 +108,8 @@ class JsonWorkManager:
 
     def start(self):
         self.running = True
+
+        self.internal_config = copy.deepcopy(self.config)
 
         self.log(f"{self.title}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
         if self.internal_config.get("speak_start_log"):
