@@ -68,7 +68,7 @@ if __name__ == "__main__":
     def log_callback(message, verbose, background_rgb):
         print(message, verbose, background_rgb) 
 
-    _json_work_manager.stop_callback=stop_callback 
-    _json_work_manager.end_callback=end_callback 
-    _json_work_manager.log_callback=log_callback 
+    _json_work_manager.stop_callback = stop_callback 
+    _json_work_manager.end_callback = end_callback 
+    _json_work_manager.log_callback = log_callback 
     _json_work_manager.start()
