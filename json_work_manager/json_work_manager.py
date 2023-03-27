@@ -5,6 +5,7 @@ import traceback
 import python_supporter
 import time
 import ai_supporter
+import copy
 
 class ThreadRun:
     def __init__(self, config, work, json_work_class, json_work_manager, inputs_directory, outputs_directory, schedule, schedule_s):
@@ -95,6 +96,7 @@ class JsonWorkManager:
             os.makedirs(self.outputs_directory)
         self.json_file = self.inputs_directory +"/config.json"
         self.config = python_supporter.config.load_config_from_json_file(self.json_file)
+        self.original_config = copy.deepcopy(self.confi)
         self.json_work_class = json_work_class
         self.stop_callback = stop_callback
         self.end_callback = end_callback
