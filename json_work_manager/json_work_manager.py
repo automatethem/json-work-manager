@@ -8,16 +8,16 @@ import ai_supporter
 import copy
 
 class ThreadRun:
-    def __init__(self, config, work, json_work_class, json_work_manager, inputs_directory, outputs_directory, schedule, schedule_s):
+    def __init__(self, internal_config, work, json_work_class, json_work_manager, inputs_directory, outputs_directory, schedule, schedule_s):
         super().__init__()
 
-        self.config = config
+        self.internal_config = internal_config
         self.work = work
         self.json_work_manager = json_work_manager
         self.schedule = schedule
         self.schedule_s = schedule_s
 
-        self.worker = json_work_class(self.config, self.work, self.json_work_manager, inputs_directory, outputs_directory, schedule_s)
+        self.worker = json_work_class(self.internal_config, self.work, self.json_work_manager, inputs_directory, outputs_directory, schedule_s)
 
     def run(self):
         if self.schedule_s == None or self.schedule_s == "":
@@ -96,7 +96,7 @@ class JsonWorkManager:
             os.makedirs(self.outputs_directory)
         self.json_file = self.inputs_directory +"/config.json"
         self.config = python_supporter.config.load_config_from_json_file(self.json_file)
-        self.original_config = copy.deepcopy(self.confi)
+        self.internal_config = copy.deepcopy(self.confi)
         self.json_work_class = json_work_class
         self.stop_callback = stop_callback
         self.end_callback = end_callback
@@ -107,18 +107,16 @@ class JsonWorkManager:
         self.thread_runs = []
         self.threads = []
 
-        ##python_supporter.logging_lib.basic_config(app.define_logging_level.level, os.path.join(self.outputs_directory, "log.txt"))
-
     def start(self):
         self.running = True
 
         self.log(f"{self.title}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
-        if self.config.get("speak_start_log"):
+        if self.internal_config.get("speak_start_log"):
             ai_supporter.tts.speak(f"{self.title}을 시작합니다.")
                     
         message = "활성 작업 리스트입니다."
         self.log(message)
-        for work in self.config["works"]:
+        for work in self.internal_config["works"]:
             name = work["name"]
             enable = work["enable"]
             if enable:
@@ -165,7 +163,7 @@ class JsonWorkManager:
                         self.log(message)
 
         while True:
-            for work in self.config["works"]:
+            for work in self.internal_config["works"]:
                 if not self.running:
                     break
                 if work["enable"] and not work.get("internal_mark_work_no_more_run"):
@@ -187,13 +185,13 @@ class JsonWorkManager:
                                         schedule["internal_mark_schedule_no_more_run"] = True
                                         schedule_dt = datetime.datetime(year, month, day, hour, minute, second)
                                         schedule_s = schedule_dt.strftime('%Y-%m-%d %H:%M:%S')
-                                        thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                        thread_run = ThreadRun(self.internal_config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                         thread = threading.Thread(target=thread_run.run, args=[])
                                         thread.daemon = True
                                         thread.start()
                                         self.thread_runs.append(thread_run)
                                         self.threads.append(thread)
-                                        if self.config["sequence"]:
+                                        if self.internal_config["sequence"]:
                                             thread.join()
                                     else: #지난 시간
                                         schedule_dt = datetime.datetime(year, month, day, hour, minute, second)
@@ -221,13 +219,13 @@ class JsonWorkManager:
                                             schedule_dt = dt.replace(hour=hour, minute=minute, second=second)
                                             schedule_s = "매 " + schedule_dt.strftime('%H시 %M분 %S초')
                                             schedule_s = schedule_s + " 마다"
-                                            thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                            thread_run = ThreadRun(self.internal_config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                             thread = threading.Thread(target=thread_run.run, args=[])
                                             thread.daemon = True
                                             thread.start()
                                             self.thread_runs.append(thread_run)
                                             self.threads.append(thread)
-                                            if self.config["sequence"]:
+                                            if self.internal_config["sequence"]:
                                                 thread.join()
                                 elif minute != None and second != None:
                                     if minute == dt.minute and second == dt.second:
@@ -239,13 +237,13 @@ class JsonWorkManager:
                                             schedule_dt = dt.replace(minute=minute, second=second)
                                             schedule_s = "매 " + schedule_dt.strftime('%M분 %S초')
                                             schedule_s = schedule_s + " 마다"
-                                            thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                            thread_run = ThreadRun(self.internal_config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                             thread = threading.Thread(target=thread_run.run, args=[])
                                             thread.daemon = True
                                             thread.start()
                                             self.thread_runs.append(thread_run)
                                             self.threads.append(thread)
-                                            if self.config["sequence"]:
+                                            if self.internal_config["sequence"]:
                                                 thread.join()
                                 elif second != None:
                                     if second == dt.second:
@@ -258,24 +256,24 @@ class JsonWorkManager:
                                             schedule_dt = dt.replace(second=second)
                                             schedule_s = "매 " + schedule_dt.strftime('%S초')
                                             schedule_s = schedule_s + " 마다"
-                                            thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                            thread_run = ThreadRun(self.internal_config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                             thread = threading.Thread(target=thread_run.run, args=[])
                                             thread.daemon = True
                                             thread.start()
                                             self.thread_runs.append(thread_run)
                                             self.threads.append(thread)
-                                            if self.config["sequence"]:
+                                            if self.internal_config["sequence"]:
                                                 thread.join()
                                 else:
                                     schedule["internal_mark_schedule_no_more_run"] = True
                                     schedule_s = "지금"
-                                    thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
+                                    thread_run = ThreadRun(self.internal_config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, schedule, schedule_s)
                                     thread = threading.Thread(target=thread_run.run, args=[])
                                     thread.daemon = True
                                     thread.start()
                                     self.thread_runs.append(thread_run)
                                     self.threads.append(thread)
-                                    if self.config["sequence"]:
+                                    if self.internal_config["sequence"]:
                                         thread.join()
 
                         internal_mark_work_no_more_run = True
@@ -289,18 +287,18 @@ class JsonWorkManager:
                     else:
                         work["internal_mark_work_no_more_run"] = True
                         schedule_s = "지금"
-                        thread_run = ThreadRun(self.config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, None, schedule_s)
+                        thread_run = ThreadRun(self.internal_config, work, self.json_work_class, self, self.inputs_directory, self.outputs_directory, None, schedule_s)
                         thread = threading.Thread(target=thread_run.run, args=[])
                         thread.daemon = True
                         thread.start()
                         self.thread_runs.append(thread_run)
                         self.threads.append(thread)
-                        if self.config["sequence"]:
+                        if self.internal_config["sequence"]:
                             thread.join()
                     
             #logging.debug("========")
             #logging.debug(self.threads)
-            for work in self.config["works"]:
+            for work in self.internal_config["works"]:
                 #logging.debug("------")
                 #logging.debug(json.dumps(work, indent=4))
                 pass
@@ -310,12 +308,12 @@ class JsonWorkManager:
                     thread.join()
                 self.stop_callback()
                 self.log(f"{self.title}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
-                if self.config.get("speak_stop_log"):
+                if self.internal_config.get("speak_stop_log"):
                     ai_supporter.tts.speak(f"{self.title}을 중지합니다.")
                 break
 
             all_done = True
-            for work in self.config["works"]:
+            for work in self.internal_config["works"]:
                 if work["enable"]:
                     #logging.debug(work.get("internal_mark_work_done"))
                     if not work.get("internal_mark_work_done"):   
@@ -324,7 +322,7 @@ class JsonWorkManager:
                 if self.end_callback:
                     self.end_callback()
                 self.log(f"{self.title}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
-                if self.config.get("speak_stop_log"):
+                if self.internal_config.get("speak_stop_log"):
                     ai_supporter.tts.speak(f"{self.title}을 종료합니다.")
                 break
 
