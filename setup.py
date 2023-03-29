@@ -7,7 +7,7 @@ def requirements():
 
 setuptools.setup(
 	name='json-work-manager',
-	version='0.0.7',
+	version='0.0.8',
 	description='Json work manager',
 	long_description=open('README.md').read(),
 	long_description_content_type='text/markdown',
