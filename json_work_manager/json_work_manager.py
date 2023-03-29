@@ -87,7 +87,7 @@ class ThreadRun:
             self.work["internal_mark_work_done"] = True
 
 class JsonWorkManager:
-    def __init__(self, base_directory, json_work_class, stop_callback=None, end_callback=None, log_callback=None, title = "Json 작업 관리자"):
+    def __init__(self, base_directory, json_work_class, stop_callback=None, end_callback=None, log_callback=None, title="Json 작업 관리자"):
         super().__init__()
         self.title = title
         self.inputs_directory = base_directory + "/inputs"
