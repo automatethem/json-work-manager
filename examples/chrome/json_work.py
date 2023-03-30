@@ -1,6 +1,18 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import UnexpectedAlertPresentException
+import os
 import time
 import datetime
-import os
+import shutil
+import base64
+import traceback
+import re
+import datetime
+import selenium_supporter
 from json_work_manager.json_work_manager import JsonWorkManager
 from python_supporter import logging
 
@@ -19,10 +31,15 @@ class JsonWork:
     def start(self):
         self.running = True
 
+        debugger_address = self.work["chrome"]["debugger_address"]
+        chrome_driver = selenium_supporter.drivers.ChromeDebuggingDriver(debugger_address)
+        self.driver = chrome_driver.get_driver()
+       
         #'''
-        self.log("작업을 합니다")
-        self.log("1초간 쉽니다")
+        self.log("https://section.blog.naver.com/ 로 이동합니다")        
+        self.driver.get("https://section.blog.naver.com/")
         
+        self.log("1초간 쉽니다")
         self.wait_for(1)   
         #'''
         '''
@@ -30,11 +47,57 @@ class JsonWork:
             if not self.running:
                 break
     
-            self.log("작업을 합니다")
+            self.log("https://section.blog.naver.com/ 로 이동합니다")        
+            self.driver.get("https://section.blog.naver.com/")
             self.log("1초간 쉽니다")
             self.wait_for(1)        
-        '''
+        ''' 
+        
+    '''
+    사용 예1)
+    #self.web_driver_wait = WebDriverWait(self.driver, 20) #element가 나올때 까지 최고 20초까지 기다리기.
+    #img_element = self.web_driver_wait.until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "div.vehicle-thumbnail > ul > li > a > img")))
+    img_element = self.wait_until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "div.vehicle-thumbnail > ul > li > a > img")))
+    '''
+    '''
+    사용 예2)
+    #self.web_driver_wait = WebDriverWait(self.driver, 20) #element가 나올때 까지 최고 20초까지 기다리기.
+    #self.web_driver_wait.until(expected_conditions.alert_is_present())
+    self.wait_until(expected_conditions.alert_is_present())
+    alert = self.driver.switch_to.alert
+    text = alert.text
+    alert.accept()
+    '''
+    def wait_until(self, expected_condition, until_seconds=20):
+        try:
+            if not self.web_driver_wait:
+                self.web_driver_wait = WebDriverWait(self.driver, 0.01)
+        except:
+            self.web_driver_wait = WebDriverWait(self.driver, 0.01)
+        
+        current_datetime = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+        until_datetime = current_datetime + datetime.timedelta(seconds=until_seconds) 
 
+        element = None
+        last_exception = None
+        while True:
+            try:
+                element = self.web_driver_wait.until(expected_condition)
+            except BaseException as e:
+                logging.debug(type(e))
+                last_exception = e
+
+            if element:
+                break
+            else:
+                current_datetime = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+                if current_datetime >= until_datetime:
+                    raise last_exception
+                elif last_exception and not self.running:
+                    raise last_exception
+                    
+        return element
+        
     def wait_for(self, wait_seconds):
         current_datetime = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
         until_datetime = current_datetime + datetime.timedelta(seconds=wait_seconds) 
