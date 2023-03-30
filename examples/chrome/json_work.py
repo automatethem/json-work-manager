@@ -141,7 +141,7 @@ if __name__ == "__main__":
         pass
     
     def log_callback(message, verbose, background_rgb):
-        print(message, verbose, background_rgb) 
+        print(message) 
 
     selenium_supporter.utils.kill_all_chrome_web_browser_driver_processes()
     _json_work_manager.stop_callback = stop_callback 
