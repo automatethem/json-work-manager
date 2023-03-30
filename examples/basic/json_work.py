@@ -77,7 +77,7 @@ if __name__ == "__main__":
         pass
     
     def log_callback(message, verbose, background_rgb):
-        print(message, verbose, background_rgb) 
+        print(message) 
 
     _json_work_manager.stop_callback = stop_callback 
     _json_work_manager.end_callback = end_callback 
