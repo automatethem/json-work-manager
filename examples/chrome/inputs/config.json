@@ -1,6 +1,173 @@
 {
     "works": [
         {
+            "name": "작업1",
+            "random_wait_seconds_after_page": [
+                0.1,
+                0.3
+            ],
+            "stop_if_registration_date_is_before": "2022-06-01",
+            "profile": {
+                "name": "홍길동",
+                "department": "부서명",
+                "phone1": "02",
+                "phone2": "1234",
+                "phone3": "5678",
+                "cellular_phone1": "010",
+                "cellular_phone2": "1234",
+                "cellular_phone3": "5678",
+                "notification": false,
+                "email_id": "gildonghong",
+                "email_domain": "gmail.com"
+            },
+            "position_information": {
+                "position_information": "포지션 정보1",
+                "response_date": "",
+                "proposal_content": "제안 내용1"
+            },
+            "not_submit": false,
+            "chrome": {
+                "debugger_address": "127.0.0.1:1001",
+                "headless": false,
+                "start_url": {
+                    "start_url": "https://www.jobkorea.co.kr/Corp/Person/Find",
+                    "enable": true
+                },
+                "user_data_dir": {
+                    "user_data_dir": "{outputs_directory}/user_data_dir/{remote_debugging_port}",
+                    "enable": true
+                },
+                "proxy": {
+                    "server": "http://1.2.3.4:8080",
+                    "username": "",
+                    "password": "",
+                    "enable": false
+                }
+            },
+            "schedules": {
+                "schedules": [
+                    {
+                        "year": 2022,
+                        "month": 4,
+                        "day": 2,
+                        "hour": 5,
+                        "minute": 36,
+                        "second": 0,
+                        "enable": true
+                    }
+                ],
+                "enable": false
+            },
+            "verbose": true,
+            "enable": true
+        },
+        {
+            "name": "작업2",
+            "random_wait_seconds_after_page": [
+                0,
+                0.5
+            ],
+            "stop_if_registration_date_is_before": "2022-06-01",
+            "profile": {
+                "name": "홍길동",
+                "department": "부서명",
+                "phone1": "02",
+                "phone2": "1234",
+                "phone3": "5678",
+                "cellular_phone1": "010",
+                "cellular_phone2": "1234",
+                "cellular_phone3": "5678",
+                "notification": false,
+                "email_id": "gildonghong",
+                "email_domain": "gmail.com"
+            },
+            "position_information": {
+                "position_information": "포지션 정보2",
+                "response_date": "",
+                "proposal_content": "제안 내용2"
+            },
+            "not_submit": false,
+            "chrome": {
+                "debugger_address": "127.0.0.1:1002",
+                "headless": false,
+                "start_url": {
+                    "start_url": "https://www.jobkorea.co.kr/Corp/Person/Find",
+                    "enable": true
+                },
+                "user_data_dir": {
+                    "user_data_dir": "{outputs_directory}/user_data_dir/{remote_debugging_port}",
+                    "enable": true
+                },
+                "proxy": {
+                    "server": "http://1.2.3.4:8080",
+                    "username": "",
+                    "password": "",
+                    "enable": false
+                }
+            },
+            "schedules": {
+                "schedules": [
+                    {
+                        "year": 2022,
+                        "month": 4,
+                        "day": 2,
+                        "hour": 5,
+                        "minute": 36,
+                        "second": 0,
+                        "enable": true
+                    }
+                ],
+                "enable": false
+            },
+            "verbose": true,
+            "enable": false
+        }
+    ],
+    "override_work": {
+        "random_wait_seconds_after_page": [
+            0,
+            0.5
+        ],
+        "stop_if_registration_date_is_before": "",
+        "profile": {
+            "name": "홍길동",
+            "department": "부서명",
+            "phone1": "02",
+            "phone2": "1234",
+            "phone3": "5678",
+            "cellular_phone1": "010",
+            "cellular_phone2": "1234",
+            "cellular_phone3": "5678",
+            "notification": false,
+            "email_id": "gildonghong",
+            "email_domain": "gmail.com",
+            "profile_name": "임성준차장"
+        },
+        "not_submit": false,
+        "enable": true
+    },
+    "speak_start_log": false,
+    "speak_stop_log": true,
+    "sequence": true,
+    "shortcut_keys": {
+        "start": [
+            "control",
+            "s"
+        ],
+        "stop": [
+            "control",
+            "e"
+        ],
+        "enable": false
+    }
+}
+
+=========
+
+
+{
+    "works": [
+        {
             "name": "잡 코리아 포지션 제안 작업1",          
             "random_wait_seconds_after_page": [0.1, 0.3],
             "stop_if_registration_date_is_before": "2022-06-01",             
