@@ -12,4 +12,6 @@ https://github.com/automatethem/json-work-manager/blob/main/examples/basic/json_
 https://github.com/automatethem/json-work-managerr/blob/main/examples/basic/inputs/config.json
 
 Chrome  
-https://github.com/automatethem/json-work-manager/blob/main/examples/chrome/inputs/config.json
+https://github.com/automatethem/json-work-manager/blob/main/examples/chrome/json_work.py     
+https://github.com/automatethem/json-work-manager/blob/main/examples/chrome/inputs/config.json  
+https://github.com/automatethem/json-work-manager/blob/main/examples/chrome/controlled_chrome.bat
