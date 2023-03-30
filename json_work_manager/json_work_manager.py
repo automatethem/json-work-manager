@@ -17,7 +17,7 @@ class ThreadRun:
         self.schedule = schedule
         self.schedule_s = schedule_s
 
-        self.worker = json_work_class(self.internal_config, self.work, self.json_work_manager, inputs_directory, outputs_directory, schedule_s)
+        self.json_work = json_work_class(self.internal_config, self.work, self.json_work_manager, inputs_directory, outputs_directory, schedule_s)
 
     def run(self):
         if self.schedule_s == None or self.schedule_s == "":
@@ -30,9 +30,9 @@ class ThreadRun:
         self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
 
         try:
-            self.worker.start()
+            self.json_work.start()
 
-            if not self.worker.running:
+            if not self.json_work.running:
                 self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
             else:
                 self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
@@ -78,7 +78,7 @@ class ThreadRun:
             self.json_work_manager.log(traceback.format_exc())
             #logging.debug(traceback.format_exc())
             
-            if not self.worker.running:
+            if not self.json_work.running:
                 self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
             else:
                 self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
@@ -341,4 +341,4 @@ class JsonWorkManager:
         self.running = False
 
         for thread_run in self.thread_runs:
-            thread_run.worker.stop()
+            thread_run.json_work.stop()
