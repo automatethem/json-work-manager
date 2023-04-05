@@ -132,7 +132,7 @@ if __name__ == "__main__":
     #logging.basicConfig(logging.DEBUG, filename='log.txt')
     
     _base_directory = os.path.dirname(os.path.realpath(__file__))
-    _json_work_manager = JsonWorkManager(_base_directory, json_work_class=JsonWork, title="크롬 업무자동화 앱")
+    _json_work_manager = JsonWorkManager(_base_directory, json_work_class=JsonWork, title="기본 크롬 업무자동화봇")
 
     def stop_callback():
         pass
