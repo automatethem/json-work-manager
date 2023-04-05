@@ -88,7 +88,7 @@
             },
             "not_submit": false,
             "chrome": {
-                "debugger_address": "127.0.0.1:1002",
+                "debugger_address": "127.0.0.1:1001",
                 "headless": false,
                 "start_url": {
                     "start_url": "https://www.jobkorea.co.kr/Corp/Person/Find",
