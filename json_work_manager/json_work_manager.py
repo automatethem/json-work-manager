@@ -94,7 +94,8 @@ class JsonWorkManager:
         self.outputs_directory = base_directory + "/outputs"
         if not os.path.exists(self.outputs_directory):
             os.makedirs(self.outputs_directory)
-        self.json_file = self.inputs_directory +"/config.json"
+        #self.json_file = self.inputs_directory +"/config.json"
+        self.json_file = base_directory +"/config.json"
         self.config = python_supporter.config.load_config_from_json_file(self.json_file)
         self.json_work_class = json_work_class
         self.stop_callback = stop_callback
