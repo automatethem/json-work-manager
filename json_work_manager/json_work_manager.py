@@ -308,8 +308,9 @@ class JsonWorkManager:
             if not self.running:
                 for thread in self.threads:
                     thread.join()
-                self.stop_callback()
                 self.log(f"{self.title}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
+                if self.stop_callback:
+                    self.stop_callback()
                 if self.internal_config.get("speak_stop_log"):
                     ai_supporter.tts.speak(f"{self.title}을 중지합니다.")
                 break
@@ -321,9 +322,9 @@ class JsonWorkManager:
                     if not work.get("internal_mark_work_done"):   
                         all_done = False
             if all_done:
+                self.log(f"{self.title}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
                 if self.end_callback:
                     self.end_callback()
-                self.log(f"{self.title}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
                 if self.internal_config.get("speak_stop_log"):
                     ai_supporter.tts.speak(f"{self.title}을 종료합니다.")
                 break
