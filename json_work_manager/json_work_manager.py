@@ -91,6 +91,8 @@ class JsonWorkManager:
         super().__init__()
         self.title = title
         self.inputs_directory = base_directory + "/inputs"
+        if not os.path.exists(self.inputs_directory):
+            os.makedirs(self.inputs_directory)
         self.outputs_directory = base_directory + "/outputs"
         if not os.path.exists(self.outputs_directory):
             os.makedirs(self.outputs_directory)
