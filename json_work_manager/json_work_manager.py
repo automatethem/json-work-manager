@@ -112,7 +112,7 @@ class JsonWorkManager:
     def start(self):
         self.running = True
 
-        self.config = python_supporter.config.load_config_from_json_file(self.json_file) #
+        self.config = python_supporter.config.load_config_from_json_file(self.json_file) 
         self.internal_config = copy.deepcopy(self.config)
 
         self.log(f"{self.title}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
