@@ -27,15 +27,15 @@ class ThreadRun:
         else:
             schedule_s = " (" + self.schedule_s +")" 
 
-        self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
+        self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 시작합니다.", verbose=True, background_color="#ccffff")
 
         try:
             self.json_work.start()
 
             if not self.json_work.running:
-                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_color="#9acdcd")
             else:
-                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_color="#9acdcd")
 
             if self.schedule:
                 year = self.schedule.get("year")
