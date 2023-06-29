@@ -79,9 +79,9 @@ class ThreadRun:
             #logging.debug(traceback.format_exc())
             
             if not self.json_work.running:
-                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 중지합니다.", verbose=True, background_color="#9acdcd")
             else:
-                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.json_work_manager.log(f"{self.work['name']}{schedule_s}을 종료합니다.", verbose=True, background_color="#9acdcd")
 
             #logging.debug("internal_mark_work_done")
             self.work["internal_mark_work_done"] = True
@@ -114,7 +114,7 @@ class JsonWorkManager:
 
         self.internal_config = copy.deepcopy(self.config)
 
-        self.log(f"{self.title}을 시작합니다.", verbose=True, background_rgb=[204, 255, 255])
+        self.log(f"{self.title}을 시작합니다.", verbose=True, background_color="#ccffff")
         if self.internal_config.get("speak_start_log"):
             ai_supporter.tts.speak(f"{self.title}을 시작합니다.")
                     
@@ -310,7 +310,7 @@ class JsonWorkManager:
             if not self.running:
                 for thread in self.threads:
                     thread.join()
-                self.log(f"{self.title}을 중지합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.log(f"{self.title}을 중지합니다.", verbose=True, background_color="#9acdcd")
                 if self.stop_callback:
                     self.stop_callback()
                 if self.internal_config.get("speak_stop_log"):
@@ -324,7 +324,7 @@ class JsonWorkManager:
                     if not work.get("internal_mark_work_done"):   
                         all_done = False
             if all_done:
-                self.log(f"{self.title}을 종료합니다.", verbose=True, background_rgb=[154, 205, 205])
+                self.log(f"{self.title}을 종료합니다.", verbose=True, background_color="#9acdcd")
                 if self.end_callback:
                     self.end_callback()
                 if self.internal_config.get("speak_stop_log"):
@@ -333,9 +333,9 @@ class JsonWorkManager:
 
             time.sleep(0.1)
 
-    def log(self, message, verbose=True, background_rgb=[255, 255, 255]):  
+    def log(self, message, verbose=True, background_color="white"):  
         if self.log_callback:
-            self.log_callback(message, verbose, background_rgb)
+            self.log_callback(message, verbose, background_color)
         else:
             dt = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
             text = message + ", " + dt.strftime('%Y-%m-%d %H:%M:%S')
